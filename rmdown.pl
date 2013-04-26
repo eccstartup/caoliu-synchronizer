@@ -6,7 +6,7 @@ use utf8;
 use LWP::UserAgent;
 use autodie qw/open/;
 
-binmode (STDOUT, ':encoding(utf8)');
+#binmode (STDOUT, ':encoding(utf8)');
 $| = 1;
 
 sub rmdown_to
@@ -47,6 +47,7 @@ sub rmdown_to
 };
 
 my $id = shift or die "usage: rmdown [ id | rmdown.com/link.php?hash= ]";
+
 if ($id =~ /([0-9a-zA-Z]{10,})$/)
 {
     $id = $1;
@@ -60,5 +61,7 @@ else
     die "Invalid url: $id\n";
 }
 
-rmdown_to ($id, "$id.torrent");
-print "$id.torrent saved.\n";
+my $out = shift || "$id.torrent";
+
+rmdown_to ($id, $out);
+print "$out saved.\n";
